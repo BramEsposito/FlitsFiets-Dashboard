@@ -1,0 +1,220 @@
+body {
+  height: 100%;
+  font-family: sans-serif; }
+
+html {
+  height: 100%;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent; }
+
+body, div, span, applet, object, iframe, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after {
+  content: '';
+  content: none; }
+
+q:before, q:after {
+  content: '';
+  content: none; }
+
+:focus {
+  outline: 0; }
+
+del {
+  text-decoration: line-through; }
+
+h1 {
+  margin: 20px; }
+
+table#resultstable {
+  border-spacing: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #666;
+  font-size: 12px;
+  text-shadow: 1px 1px 0px #fff;
+  background: #eaebec;
+  margin: 20px;
+  border: #ccc 1px solid;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  -moz-box-shadow: 0 1px 2px #d1d1d1;
+  -webkit-box-shadow: 0 1px 2px #d1d1d1;
+  box-shadow: 0 1px 2px #d1d1d1; }
+  table#resultstable a:link {
+    color: #666;
+    font-weight: bold;
+    text-decoration: none; }
+  table#resultstable a:visited {
+    color: #999999;
+    font-weight: bold;
+    text-decoration: none; }
+  table#resultstable a:active, table#resultstable a:hover {
+    color: #bd5a35;
+    text-decoration: underline; }
+  table#resultstable th {
+    padding: 21px 25px 22px 25px;
+    border-top: 1px solid #fafafa;
+    border-bottom: 1px solid #e0e0e0;
+    background: #ededed;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
+    background: -moz-linear-gradient(top, #ededed, #ebebeb); }
+    table#resultstable th:first-child {
+      text-align: left;
+      padding-left: 20px; }
+  table#resultstable tr {
+    text-align: center;
+    padding-left: 20px; }
+    table#resultstable tr:first-child th:first-child {
+      -moz-border-radius-topleft: 3px;
+      -webkit-border-top-left-radius: 3px;
+      border-top-left-radius: 3px; }
+    table#resultstable tr:first-child th:last-child {
+      -moz-border-radius-topright: 3px;
+      -webkit-border-top-right-radius: 3px;
+      border-top-right-radius: 3px; }
+  table#resultstable td {
+    padding: 18px;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    background: #fafafa;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
+    background: -moz-linear-gradient(top, #fbfbfb, #fafafa); }
+    table#resultstable td:first-child {
+      text-align: left;
+      padding-left: 20px;
+      border-left: 0; }
+  table#resultstable tr.even td {
+    background: #f6f6f6;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f6f6f6));
+    background: -moz-linear-gradient(top, #f8f8f8, #f6f6f6); }
+  table#resultstable tr:last-child td {
+    border-bottom: 0; }
+    table#resultstable tr:last-child td:first-child {
+      -moz-border-radius-bottomleft: 3px;
+      -webkit-border-bottom-left-radius: 3px;
+      border-bottom-left-radius: 3px; }
+    table#resultstable tr:last-child td:last-child {
+      -moz-border-radius-bottomright: 3px;
+      -webkit-border-bottom-right-radius: 3px;
+      border-bottom-right-radius: 3px; }
+  table#resultstable tr:hover td {
+    background: #f2f2f2;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
+    background: -moz-linear-gradient(top, #f2f2f2, #f0f0f0); }
+
+/* IMPORTANT, I REMOVED border-collapse: collapse; FROM THIS LINE IN ORDER TO MAKE THE OUTER BORDER RADIUS WORK */
+#resultstable td:nth-of-type(1), #resultstable td:nth-of-type(2) {
+  font-size: 1.1em; }
+
+span.date {
+  color: #bbb; }
+
+a.red, td.red {
+  color: red; }
+
+a.green, td.green {
+  color: green; }
+
+a.orange, td.orange {
+  color: orange; }
+
+/*
+Max width before this PARTICULAR table gets nasty. This query will take effect for any screen smaller than 760px and also iPads specifically.
+*/
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+  /* Force table to not be like tables anymore */
+  table#resultstable,
+  table#resultstable thead,
+  table#resultstable tbody,
+  table#resultstable th,
+  table#resultstable td,
+  table#resultstable tr {
+    display: block; }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  #resultstable thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px; }
+
+  table#resultstable tr {
+    margin: 0 0 1rem 0;
+    padding: 0; }
+
+  #resultstable tr:nth-child(odd) {
+    background: #ccc; }
+
+  table#resultstable td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding: 2px;
+    padding-left: 30%;
+    text-align: left;
+    display: none; }
+    table#resultstable td:first-child {
+      /* Behave  like a "row" */
+      border: none;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      padding: 2px;
+      padding-left: 30%;
+      text-align: left;
+      display: none; }
+    table#resultstable td:nth-of-type(1), table#resultstable td:nth-of-type(2) {
+      display: block; }
+    table#resultstable td:before {
+      /* Now like a table header */
+      position: absolute;
+      /* Top/left values mimic padding */
+      top: 0;
+      left: 6px;
+      width: 25%;
+      padding-right: 10px;
+      white-space: nowrap; }
+
+  /*
+  Label the data
+  You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
+  */
+  #resultstable td:nth-of-type(1):before {
+    content: "Speed"; }
+  #resultstable td:nth-of-type(2):before {
+    content: "Time"; }
+  #resultstable td:nth-of-type(3):before {
+    content: "Street"; }
+  #resultstable td:nth-of-type(4):before {
+    content: "Direction"; }
+  #resultstable td:nth-of-type(5):before {
+    content: "Lon"; }
+  #resultstable td:nth-of-type(6):before {
+    content: "Lat"; }
+  #resultstable td:nth-of-type(7):before {
+    content: "Radar"; } }
+
+/*# sourceMappingURL=main.css.map */

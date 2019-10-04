@@ -5,6 +5,7 @@ $loader->add('FlitsFiets\\', __DIR__.'/../src/');
 
 use FlitsFiets\App;
 use FlitsFiets\RegexRouter;
+use FlitsFiets\Views\ReportView;
 
 try {
   $app = new App();
@@ -13,11 +14,12 @@ try {
 
   $router = new RegexRouter();
 
-  $router->route($_ENV['DASHBOARD_URL'].'\/(w+)/', function($date) use ($app){
-
+  $router->route($_ENV['DASHBOARD_URL'].'\/(\w+)/', function($date) use ($app){
+    $v = new ReportView();
+    $app->view($v->render());
   });
 
-  $router->route($_ENV['API_URL'].'/', function($filetype) use ($app){
+  $router->route($_ENV['API_URL'].'/', function() use ($app){
 
   });
 

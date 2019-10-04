@@ -15,6 +15,7 @@ class App {
   public function __construct() {
 
     $this->APPDIR = realpath(pathinfo($_SERVER["SCRIPT_FILENAME"], PATHINFO_DIRNAME)."/../");
+    define( "APP_ROOT", $this->APPDIR);
     set_error_handler([$this,'exceptions_error_handler']);
     ob_start([$this,'catcherrors']);
   }
@@ -26,9 +27,9 @@ class App {
 
   public function auth() {
     if (!isset($_SERVER['PHP_AUTH_USER'])) {
-      header('WWW-Authenticate: Basic realm="Robinsonlijst.be secure environment"');
+      header('WWW-Authenticate: Basic realm="Flitsfiets secure environment"');
       header('HTTP/1.0 401 Unauthorized');
-      $this->quitWithmessage('Sorry, you have no access.');
+      $this->quitWithMessage('Sorry, you have no access.');
     } else {
       $this->log("Authenticating user with credentials ".$_SERVER['PHP_AUTH_USER'] ." AND ". $_SERVER['PHP_AUTH_PW']);
       $user = $_ENV["AUTH_USER"];
@@ -36,7 +37,7 @@ class App {
       if ($user == $_SERVER['PHP_AUTH_USER'] && $password == $_SERVER['PHP_AUTH_PW']) {
         $this->authenticated = true;
       } else {
-        $this->quitWithmessage('Sorry, you have no access.');
+        $this->quitWithMessage('Sorry, you have no access.');
       }
     }
   }
@@ -109,7 +110,7 @@ class App {
         break;
     }
   }
-  public function quitWithmessage($message) {
+  public function quitWithMessage($message) {
     ob_end_clean();
     print $message;
     exit;

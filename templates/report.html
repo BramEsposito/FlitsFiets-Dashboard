@@ -1,12 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>FlitsFiets dashboard</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script
+          src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+  <script
+          src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+          integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+          crossorigin="anonymous"></script>
+  <script>
+    $( function() {
+      $( "#datepicker" ).datepicker().datepicker("option", "dateFormat","yy-mm-dd");
+    } );
+  </script>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style type="text/css" id="grid">
+    .container {
+      max-width: 1044px;
+      margin: 0px auto;
+    }
+    .row {
+      margin: 20px;
+    }
+  </style>
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
 </head>
 <body>
-<ol>
-  <li> <b>{{ content }} </b></li>
-</ol>
+  <div class="container">
+    <h1>Flitsfiets registraties</h1>
+    <p class="row">TOON:
+      <a href="#" class="red" onclick="$('td.green').parent().hide();$('td.orange').parent().hide();$('td.red').parent().show();return false;">ROOD</a>
+      <a href="#" class="orange"onclick="$('td.green').parent().hide();$('td.orange').parent().show();$('td.red').parent().hide();">ORANJE</a>
+      <a href="#" class="green"onclick="$('td.green').parent().show();$('td.orange').parent().hide();$('td.red').parent().hide();">GROEN</a>
+      <a href="#"onclick="$('td.green').parent().show();$('td.orange').parent().show();$('td.red').parent().show();">ALLES</a>
+    </p>
+    <div id="Graph">
+
+    </div>
+    <ol>
+      <li> <b>{{ content }} </b></li>
+    </ol>
+  </div>
+  <script type="text/javascript">
+    {{ plotly|raw }}
+
+    // https://plot.ly/javascript/bar-charts/
+    var data = [
+      {
+        x: ['-30', '30-40', '40-50', '50-70','70+'],
+        y: yValue,
+        type: 'bar',
+        text: yValue.map(String),
+        textposition: 'auto'
+      }
+    ];
+
+    Plotly.newPlot('Graph', data);
+  </script>
 </body>
 </html>

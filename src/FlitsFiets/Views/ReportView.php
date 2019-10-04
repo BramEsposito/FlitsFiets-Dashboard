@@ -27,7 +27,25 @@ class ReportView {
   public function render() {
     // https://twig.symfony.com/doc/2.x/api.html
     $content = $this->c->getReport();
+    $plotly = "";
+
+
+    // TODO: print graph X values
+
+    $v = $this->c->getIntervalData();
+
+    // TODO: use json_encode
+    $plotly .= "var yValue = [";
+    array_walk($v, function ($item, $index) use ($v,$plotly) {
+      $plotly .= $item[0]['nbr'];
+      if ($index < count($v) - 1) {
+        $plotly .= ",";
+      }
+    });
+    $plotly .= "];\n\n";
+
+
     $template = $this->twig->load('report.html');
-    return $template->render(compact('content'));
+    return $template->render(compact('content', 'plotly'));
   }
 }

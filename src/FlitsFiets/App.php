@@ -24,6 +24,23 @@ class App {
     $this->debug($_ENV);
   }
 
+  public function auth() {
+    if (!isset($_SERVER['PHP_AUTH_USER'])) {
+      header('WWW-Authenticate: Basic realm="Robinsonlijst.be secure environment"');
+      header('HTTP/1.0 401 Unauthorized');
+      $this->quitWithmessage('Sorry, you have no access.');
+    } else {
+      $this->log("Authenticating user with credentials ".$_SERVER['PHP_AUTH_USER'] ." AND ". $_SERVER['PHP_AUTH_PW']);
+      $user = $_ENV["AUTH_USER"];
+      $password = $_ENV["AUTH_PWD"];
+      if ($user == $_SERVER['PHP_AUTH_USER'] && $password == $_SERVER['PHP_AUTH_PW']) {
+        $this->authenticated = true;
+      } else {
+        $this->quitWithmessage('Sorry, you have no access.');
+      }
+    }
+  }
+
   public function view($message,$mode = "html") {
     switch($mode) {
       case "html":
@@ -34,7 +51,6 @@ class App {
         // do nothing
         break;
     }
-
   }
 
   public function exceptions_error_handler($severity, $message, $filename, $lineno) {
@@ -92,6 +108,16 @@ class App {
         krumo($this->getResponse());
         break;
     }
+  }
+  public function quitWithmessage($message) {
+    ob_end_clean();
+    print $message;
+    exit;
+  }
+
+  public function log($message) {
+    $message = date("Y-m-d h:i:s")." - ".$_SERVER['REMOTE_ADDR']." - ".$message.PHP_EOL;
+    error_log($message,3,$this->APPDIR."/logs/activity.log");
   }
 
   public function debug($object) {

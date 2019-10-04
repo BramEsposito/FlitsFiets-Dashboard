@@ -9,6 +9,7 @@ use FlitsFiets\RegexRouter;
 try {
   $app = new App();
   $app->init();
+  $app->auth();
 
   $router = new RegexRouter();
 

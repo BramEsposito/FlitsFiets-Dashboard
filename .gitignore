@@ -1,0 +1,9 @@
+node_modules
+vendor
+
+_rommel
+cache/templates
+
+*.log
+
+.env

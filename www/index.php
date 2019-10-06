@@ -14,8 +14,8 @@ try {
 
   $router = new RegexRouter();
 
-  $router->route($_ENV['DASHBOARD_URL'].'\/(\w+)/', function($date) use ($app){
-    $v = new ReportView();
+  $router->route("/\\".$_ENV['DASHBOARD_URL'].'\/(.*)\//', function($date) use ($app){
+    $v = new ReportView($date);
     $app->view($v->render());
   });
 

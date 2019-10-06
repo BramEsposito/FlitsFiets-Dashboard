@@ -9,11 +9,11 @@ class ReportView {
   private $c; // controller
   private $twig; // twig object
 
-  public function __construct() {
+  public function __construct($date = NULL) {
     $loader = new \Twig\Loader\FilesystemLoader(APP_ROOT.'/templates');
     $twigoptions = $this->getCachingState();
     $this->twig = new \Twig\Environment($loader, $twigoptions);
-    $this->c = new ReportController();
+    $this->c = new ReportController($date);
   }
 
   public function getCachingState() {
@@ -36,7 +36,7 @@ class ReportView {
 
     // TODO: use json_encode
     $plotly .= "var yValue = [";
-    array_walk($v, function ($item, $index) use ($v,$plotly) {
+    array_walk($v, function ($item, $index) use ($v,&$plotly) {
       $plotly .= $item[0]['nbr'];
       if ($index < count($v) - 1) {
         $plotly .= ",";

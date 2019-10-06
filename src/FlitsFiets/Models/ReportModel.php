@@ -12,8 +12,9 @@ class ReportModel {
     $this->db = new SqliteDatabase(APP_ROOT."/".$_ENV['DB_FILE']);
   }
 
-  public function getIntervalData() {
-    $datePart = "date('now')";
+  public function getIntervalData($time) {
+    $datePart = $this->getDatePartFromTime($time);
+
     return [
       $this->db->fetch_array("SELECT count() as 'nbr' FROM speed WHERE speed < 30 and date(datetime(Time,'localtime')) = " . $datePart),
       $this->db->fetch_array("SELECT count() as 'nbr' FROM speed WHERE speed > 30 and speed <= 40 and date(datetime(Time,'localtime')) = " . $datePart),
@@ -23,4 +24,13 @@ class ReportModel {
     ];
 
   }
+
+  public function getDatePartFromTime($time) {
+    return "date('".
+        date('Y',$time)."-".
+        date('m',$time)."-".
+        date('d',$time).
+        "')";
+  }
 }
+

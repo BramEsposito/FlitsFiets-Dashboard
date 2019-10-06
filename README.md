@@ -11,15 +11,15 @@ You can use [PhpLiteAdmin](https://www.phpliteadmin.org/) to administer your Sql
 
 This application provides 2 features:
 
-#### An endpoint for the [Particle.io webhooks](https://docs.particle.io/tutorials/device-cloud/webhooks/)
-
-[ FEATURE NOT IMPLEMENTED YET ]
+#### 1. An endpoint for the [Particle.io webhooks](https://docs.particle.io/tutorials/device-cloud/webhooks/)
 
 The endpoint path can be set in the .env file
 
-#### A dashboard where we can see the registrations per day
+#### 2. A dashboard where we can see the registrations per day
 
-[ FEATURE NOT IMPLEMENTED YET ]
+This is a very basic, hacked-together dashboard. It displays graph using the plotly api.
+
+![Screenshot 1](documentation/Screen Shot 2019-10-06 at 22.29.29.png)![Screenshot 2](documentation/Screen Shot 2019-10-06 at 22.29.33.png)
 
 ## Installation
 

@@ -10,7 +10,7 @@ class ReportController {
   public $time; # date in $_GET
 
   public function __construct($date = null) {
-    if (!isset($date)) {
+    if (!isset($date) && isset($_REQUEST['day'])) {
       $date = $_REQUEST['day'];
     }
 

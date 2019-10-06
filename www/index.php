@@ -29,6 +29,7 @@ try {
 
   $router->route($_ENV['API_URL'].'/', function() use ($app){
     $c = new ApiController();
+    $c->addSubmission();
   });
 
   $router->route('/terms/', function() use ($app){

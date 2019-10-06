@@ -10,6 +10,27 @@ class SqliteDatabase {
     $this->sqlite = new \SQLite3($filename);
   }
 
+  public function insert( $table_name, $in_data = array() )
+  {
+    if( !empty( $in_data ) && !empty( $table_name ) )
+    {
+      $cols = $vals = '';
+
+      foreach( $in_data AS $key => $val )
+      {
+        $cols .= $key .", ";
+        $vals .= "'". $val ."', ";
+      }
+
+      $query = "INSERT INTO ". $table_name ."(". trim( $cols, ', ') .") VALUES(". trim( $vals, ', ' ) .") ";
+      return $this->query( $query );
+    }
+    else
+    {
+      return FALSE;
+    }
+  }
+
   public function fetch_array( $query ) {
     $rows = array();
     if( $res = $this->query( $query ) ){
@@ -31,6 +52,7 @@ class SqliteDatabase {
   }
 
   public function query( $query ) {
+    print($query."\n");
     $res = $this->sqlite->query( $query );
     if ( !$res )
     {

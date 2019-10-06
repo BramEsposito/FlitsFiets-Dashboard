@@ -43,9 +43,9 @@
     <h1>Flitsfiets registraties</h1>
     <p class="row">TOON:
       <a href="#" class="red" onclick="$('td.green').parent().hide();$('td.orange').parent().hide();$('td.red').parent().show();return false;">ROOD</a>
-      <a href="#" class="orange"onclick="$('td.green').parent().hide();$('td.orange').parent().show();$('td.red').parent().hide();">ORANJE</a>
-      <a href="#" class="green"onclick="$('td.green').parent().show();$('td.orange').parent().hide();$('td.red').parent().hide();">GROEN</a>
-      <a href="#"onclick="$('td.green').parent().show();$('td.orange').parent().show();$('td.red').parent().show();">ALLES</a>
+      <a href="#" class="orange" onclick="$('td.green').parent().hide();$('td.orange').parent().show();$('td.red').parent().hide();">ORANJE</a>
+      <a href="#" class="green" onclick="$('td.green').parent().show();$('td.orange').parent().hide();$('td.red').parent().hide();">GROEN</a>
+      <a href="#" onclick="$('td.green').parent().show();$('td.orange').parent().show();$('td.red').parent().show();">ALLES</a>
     </p>
     <div id="Graph">
 
@@ -53,6 +53,38 @@
     <form action="/dash/" method="get" id="daySelector">
       <p>Pick a date: <input value="{{ day }}" type="text" name="day" id="datepicker" onchange="$('#daySelector').submit();"></p>
     </form>
+
+    <!-- RESULTS TABLE -->
+    <table id="resultstable">
+      <!-- Table Header -->
+      <thead>
+      <tr>
+        <th>SPEED</th>
+        <th>TIME</th>
+        <th>STREET</th>
+        <th>DIRECTION</th>
+        <th>LON</th>
+        <th>LAT</th>
+        <th>RADAR</th>
+
+      </tr>
+      </thead>
+      <!-- Table Header -->
+      {% for row in rows %}
+      <tr>
+        <td class="{{ row.COLOR }}">{{ row.SPEED|e }}</td>
+        <td class="{{ row.COLOR }}">{{ row.FORMATTEDTIME|e }} <span class='date'>{{ row.DATE }}</span></td>
+        <td class="{{ row.COLOR }}">{{ row.STREET|e }}</td>
+        <td class="{{ row.COLOR }}">{{ row.DIRECTION|e }}</td>
+        <td class="{{ row.COLOR }}">{{ row.LON|e }}</td>
+        <td class="{{ row.COLOR }}">{{ row.LAT|e }}</td>
+        <td class="{{ row.COLOR }}">{{ row.RADAR|e }}</td>
+      </tr>
+      {% endfor %}
+
+    </table>
+    <!-- END RESULTS TABLE -->
+
   </div>
   <script type="text/javascript">
     {{ plotly|raw }}

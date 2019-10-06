@@ -2,12 +2,14 @@
 namespace FlitsFiets\Controllers;
 
 use FlitsFiets\Models\ReportModel;
+use FlitsFiets\Views\ReportView;
 
 class ReportController {
   private $m; # model
+  private $v; # view
   public $time; # date in $_GET
 
-  public function __construct($date) {
+  public function __construct($date = null) {
     if (!isset($date)) {
       $date = $_REQUEST['day'];
     }
@@ -18,6 +20,7 @@ class ReportController {
       $this->time = time();
     }
     $this->m = new ReportModel();
+    $this->v = new ReportView();
   }
 
   public function getIntervalData() {
@@ -26,5 +29,9 @@ class ReportController {
 
   public function getReport() {
     return $this->m->getReport($this->time);
+  }
+
+  public function render() {
+    return $this->v->render($this->getReport(),$this->getIntervalData(), $this->time);
   }
 }

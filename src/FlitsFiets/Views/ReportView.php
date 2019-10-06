@@ -6,17 +6,15 @@ use FlitsFiets\Controllers\ReportController;
 
 class ReportView {
 
-  private $c; // controller
   private $twig; // twig object
 
-  public function __construct($date = NULL) {
+  public function __construct() {
     $loader = new \Twig\Loader\FilesystemLoader(APP_ROOT.'/templates');
     $twigoptions = [
       "cache" => $this->getCachingState(),
       'debug' => true
     ];
     $this->twig = new \Twig\Environment($loader, $twigoptions);
-    $this->c = new ReportController($date);
   }
 
   public function getCachingState() {
@@ -27,8 +25,7 @@ class ReportView {
     }
   }
 
-  public function getReport() {
-    $r =  $this->c->getReport();
+  public function parseReport($r) {
 
     array_walk($r, function(&$item, $key) {
       $speed = round(floatval($item['SPEED']), 2);
@@ -63,22 +60,19 @@ class ReportView {
     return $r;
   }
 
-  public function render() {
+  public function render($report, $intervals, $time) {
     // https://twig.symfony.com/doc/2.x/api.html
-    $rows = $this->getReport();
+    $rows = $this->parseReport($report);
     $plotly = "";
-    $day = date("Y-m-d",$this->c->time);
+    $day = date("Y-m-d",$time);
 
 
     // TODO: print graph X values
-
-    $v = $this->c->getIntervalData();
-
     // TODO: use json_encode
     $plotly .= "var yValue = [";
-    array_walk($v, function ($item, $index) use ($v,&$plotly) {
+    array_walk($intervals, function ($item, $index) use ($intervals,&$plotly) {
       $plotly .= $item[0]['nbr'];
-      if ($index < count($v) - 1) {
+      if ($index < count($intervals) - 1) {
         $plotly .= ",";
       }
     });

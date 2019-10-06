@@ -28,6 +28,7 @@ class ReportView {
     // https://twig.symfony.com/doc/2.x/api.html
     $content = $this->c->getReport();
     $plotly = "";
+    $day = date("Y-m-d",$this->c->time);
 
 
     // TODO: print graph X values
@@ -46,6 +47,6 @@ class ReportView {
 
 
     $template = $this->twig->load('report.html');
-    return $template->render(compact('content', 'plotly'));
+    return $template->render(compact('content', 'plotly', 'day'));
   }
 }

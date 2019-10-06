@@ -19,6 +19,11 @@ try {
     $app->view($v->render());
   });
 
+  $router->route("/\\".$_ENV['DASHBOARD_URL'].'\//', function() use ($app){
+    $v = new ReportView();
+    $app->view($v->render());
+  });
+
   $router->route($_ENV['API_URL'].'/', function() use ($app){
 
   });

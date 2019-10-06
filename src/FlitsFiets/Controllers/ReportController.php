@@ -8,6 +8,10 @@ class ReportController {
   public $time; # date in $_GET
 
   public function __construct($date) {
+    if (!isset($date)) {
+      $date = $_REQUEST['day'];
+    }
+
     if (isset($date)) {
       $this->time = strtotime($date);
     } else {

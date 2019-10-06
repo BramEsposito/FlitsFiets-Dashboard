@@ -25,6 +25,6 @@ class ReportController {
   }
 
   public function getReport() {
-    return "report";
+    return $this->m->getReport($this->time);
   }
 }

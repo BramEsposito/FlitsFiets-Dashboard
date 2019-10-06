@@ -20,6 +20,16 @@ class SqliteDatabase {
     return $rows;
   }
 
+  public function fetch_rows( $table_name, $condition = 1, $column = '*', $orderby = NULL, $direction = "ASC" )
+  {
+    $query = "SELECT ". $column ." FROM ". $table_name ." WHERE ". $condition;
+    if (isset($orderby)) {
+      $query .= " ORDER BY ".$orderby." $direction";
+    }
+    $row = $this->fetch_array( $query );
+    return $row;
+  }
+
   public function query( $query ) {
     $res = $this->sqlite->query( $query );
     if ( !$res )

@@ -11,22 +11,61 @@ class ReportView {
 
   public function __construct($date = NULL) {
     $loader = new \Twig\Loader\FilesystemLoader(APP_ROOT.'/templates');
-    $twigoptions = $this->getCachingState();
+    $twigoptions = [
+      "cache" => $this->getCachingState(),
+      'debug' => true
+    ];
     $this->twig = new \Twig\Environment($loader, $twigoptions);
     $this->c = new ReportController($date);
   }
 
   public function getCachingState() {
     if ($_ENV['APP_ENV'] == 'production') {
-      return ['cache' => APP_ROOT.'/cache/templates/compilation_cache'];
+       APP_ROOT.'/cache/templates/compilation_cache';
     } else {
-      return [];
+      return false;
     }
+  }
+
+  public function getReport() {
+    $r =  $this->c->getReport();
+
+    array_walk($r, function(&$item, $key) {
+      $speed = round(floatval($item['SPEED']), 2);
+      $time = strtotime($item['TIME'] . " + 2hours");
+
+      switch (true) {
+        case $speed > 30:
+          $color = "orange";
+          break;
+        case $speed > 50:
+          $color = "red";
+          break;
+        default:
+          $color = "green";
+          break;
+      }
+
+      $item = [
+        'SPEED' => $speed,
+        'TIME' => $time,
+        'FORMATTEDTIME' => date("H:i:s", $time),
+        'DATE' => date("d/m/Y", $time),
+        'COLOR' => $color,
+        'STREET' => $item['STREET'],
+        'DIRECTION' => $item['DIRECTION'],
+        'LON' => $item['LON'],
+        'LAT' => $item['LAT'],
+        'RADAR' => $item['RADAR']
+      ];
+    });
+
+    return $r;
   }
 
   public function render() {
     // https://twig.symfony.com/doc/2.x/api.html
-    $content = $this->c->getReport();
+    $rows = $this->getReport();
     $plotly = "";
     $day = date("Y-m-d",$this->c->time);
 
@@ -47,6 +86,6 @@ class ReportView {
 
 
     $template = $this->twig->load('report.html');
-    return $template->render(compact('content', 'plotly', 'day'));
+    return $template->render(compact('rows', 'plotly', 'day'));
   }
 }

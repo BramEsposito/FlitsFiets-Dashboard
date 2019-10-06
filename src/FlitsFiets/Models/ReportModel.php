@@ -22,7 +22,12 @@ class ReportModel {
       $this->db->fetch_array("SELECT count() as 'nbr' FROM speed WHERE speed > 50 and speed <= 70 and date(datetime(Time,'localtime')) = " . $datePart),
       $this->db->fetch_array("SELECT count() as 'nbr' FROM speed WHERE speed > 70 and date(datetime(Time,'localtime')) = " . $datePart),
     ];
+  }
 
+  public function getReport($time){
+
+    $datePart = $this->getDatePartFromTime($time);
+    return $this->db->fetch_rows("speed", "date(datetime(Time,'localtime')) = " . $datePart, "*", "TIME", "DESC");
   }
 
   public function getDatePartFromTime($time) {

@@ -14,7 +14,6 @@ class ApiController {
   public function addSubmission(){
 
     $speed = floatval($_REQUEST['data']);
-    if ($speed < 15) return("low speed");
 
     $this->m->speed = $speed;
     $this->m->radar = $_REQUEST['coreid'];

@@ -22,7 +22,8 @@ class App {
 
   public function init() {
     $this->loadEnv();
-    $this->debug($_ENV);
+//    $this->debug($_ENV);
+//    $this->debug($_REQUEST);
   }
 
   public function auth() {
@@ -106,7 +107,7 @@ class App {
         break;
       case "html":
         print($this->html);
-        krumo($this->getResponse());
+//        krumo($this->getResponse());
         break;
     }
   }

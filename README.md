@@ -19,7 +19,13 @@ The endpoint path can be set in the .env file
 
 This is a very basic, hacked-together dashboard. It displays graph using the plotly api.
 
-![Screenshot 1](documentation/Screen Shot 2019-10-06 at 22.29.29.png)![Screenshot 2](documentation/Screen Shot 2019-10-06 at 22.29.33.png)
+<table>
+  <tr>
+    <td>
+<img src="https://raw.githubusercontent.com/BramEsposito/FlitsFiets-Dashboard/master/documentation/Screen%20Shot%202019-10-06%20at%2022.29.29.png" width="320"></td>
+    <td><img src="https://raw.githubusercontent.com/BramEsposito/FlitsFiets-Dashboard/master/documentation/Screen%20Shot%202019-10-06%20at%2022.29.33.png" width="320"></td>
+  </tr>
+</table>
 
 ## Installation
 

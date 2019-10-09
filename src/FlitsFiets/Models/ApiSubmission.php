@@ -19,8 +19,8 @@ class ApiSubmission extends Model {
     parent::__construct();
     $this->modus = "mps";
     $this->street = "Anselmostraat";
-    $this->lat = "4.4042355";
-    $this->lon = "51.2061932";
+    $this->lat = "51.2061932";
+    $this->lon = "4.4042355";
     $this->direction = 350;
   }
 

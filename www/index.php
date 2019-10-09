@@ -11,17 +11,18 @@ use FlitsFiets\Controllers\ApiController;
 try {
   $app = new App();
   $app->init();
-  $app->auth();
 
   $router = new RegexRouter();
 
   $router->route("/\\".$_ENV['DASHBOARD_URL'].'\/(.*)\//', function($date) use ($app){
+    $app->auth();
     // date in request url
     $c = new ReportController($date);
     $app->view($c->render());
   });
 
   $router->route("/\\".$_ENV['DASHBOARD_URL'].'\//', function() use ($app){
+    $app->auth();
     // day in $_GET
     $c = new ReportController();
     $app->view($c->render());

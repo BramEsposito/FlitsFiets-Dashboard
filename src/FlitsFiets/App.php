@@ -9,6 +9,7 @@ class App {
 
   private $r = [];  // response
   public $APPDIR;
+  private $authenticated;
 
   public $html = "";
 

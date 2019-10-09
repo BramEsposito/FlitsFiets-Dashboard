@@ -29,8 +29,18 @@ class App {
 
   public function auth() {
 
-    $auth_user = $_SERVER['PHP_AUTH_USER'];
-    $auth_pwd = $_SERVER['PHP_AUTH_PW'];
+    // FIX for PHP running in CGI mode (see also .htaccess)
+    $a = base64_decode( substr($_SERVER["REMOTE_USER"],6)) ;
+    if ($a) {
+      list($name, $password) = explode(':', $a);
+      $_SERVER['PHP_AUTH_USER'] = $name;
+      $_SERVER['PHP_AUTH_PW']    = $password;
+    }
+
+    if (isset($_SERVER['PHP_AUTH_USER'])) {
+      $auth_user = $_SERVER['PHP_AUTH_USER'];
+      $auth_pwd = $_SERVER['PHP_AUTH_PW'];
+    }
 
     if (!isset($auth_user)) {
       header('WWW-Authenticate: Basic realm="Flitsfiets secure environment"');

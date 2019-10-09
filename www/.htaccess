@@ -1,6 +1,9 @@
 Options +SymLinksIfOwnerMatch 
-RewriteEngine On 
-RewriteCond %{REQUEST_FILENAME} !-f 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
 
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteRule .* - [E=REMOTE_USER:%{HTTP:Authorization}]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.php [L]
+</IfModule>

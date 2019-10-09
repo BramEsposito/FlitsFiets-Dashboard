@@ -28,24 +28,24 @@ class App {
   }
 
   public function auth() {
-    if (!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['AUTH_USER'])) {
+
+    $auth_user = $_SERVER['PHP_AUTH_USER'];
+    $auth_pwd = $_SERVER['PHP_AUTH_PW'];
+
+    if (!isset($auth_user)) {
       header('WWW-Authenticate: Basic realm="Flitsfiets secure environment"');
       header('HTTP/1.0 401 Unauthorized');
       $this->quitWithMessage('Sorry, you have no access.');
     } else {
-      if(!isset($_SERVER['PHP_AUTH_USER'])) {
-        $auth_user = $_SERVER['AUTH_USER'];
-        $auth_pwd = $_SERVER['AUTH_PWD'];
-      } else {
-        $auth_user = $_SERVER['PHP_AUTH_USER'];
-        $auth_pwd = $_SERVER['PHP_AUTH_PW'];
-      }
+
       $this->log("Authenticating user with credentials ". $auth_user ." AND ". $auth_pwd);
       $user = $_ENV["AUTH_USER"];
       $password = $_ENV["AUTH_PWD"];
       if ($user == $auth_user && $password == $auth_pwd) {
         $this->authenticated = true;
       } else {
+        header('WWW-Authenticate: Basic realm="Flitsfiets secure environment"');
+        header('HTTP/1.0 401 Unauthorized');
         $this->quitWithMessage('Sorry, you have no access.');
       }
     }

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor</title>
+
+  <!-- JSON Editor -->
+  <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h1>Edit settings</h1>
+  <a href="{{ dashurl }}">Go to dashboard</a>
+
+  {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+      {{ message|e }}
+    </div>
+    {% endfor %}
+  {% endif %}
+
+
+  <div id="editor_holder"></div>
+  <div id="editor"></div>
+
+  <button id='submit' class="btn btn-primary">Save settings</button><p id="errormessage"></p>
+  <form id="settingsform" action="/" method="post">
+    <input name="referrer" value="/edit/" type="hidden">
+    <input name="settings" id="settings" type="hidden">
+    <input name="op" value="savesettings" type="hidden">
+  </form>
+</div>
+<script>
+    (function() {
+    // Set default options
+    JSONEditor.defaults.options.theme = 'bootstrap4';
+    JSONEditor.defaults.options.disable_collapse = true;
+    JSONEditor.defaults.options.disable_edit_json = true;
+    JSONEditor.defaults.options.disable_properties = true;
+    JSONEditor.defaults.options.object_layout = "grid";
+    JSONEditor.defaults.options.show_errors = "always";
+
+    // Require all properties by default
+    // JSONEditor.defaults.options.required_by_default = true;
+
+
+    {% verbatim %}
+    var radarschema = {
+        type: "array",
+        title: "Radars",
+        format: "tabs",
+        uniqueItems: true,
+        items: {
+            type: "object",
+            title: "Radar",
+            headerTemplate: "{{i1}}. {{self.name}}",
+            required: [
+                "name",
+                "modus",
+                "deviceid",
+                "streetname",
+                "lat",
+                "lon",
+                "direction"
+            ],
+            properties: {
+                "name": {
+                    type: "string",
+                    minLength: 1,
+                },
+                "modus": {
+                    type: "string",
+                    enum: ["mph","kmph"],
+                    default: "mph"
+                },
+                "deviceid": {
+                    type: "string",
+                    minLength: 1,
+                },
+                "streetname": {
+                    title: "Straat",
+                    type: "string",
+                    minLength: 1,
+                },
+                "lat": {
+                    title: "Latitude",
+                    type: "string",
+                    minLength: 1,
+                },
+                "lon": {
+                    title: "Longitude",
+                    type: "string",
+                    minLength: 1,
+                },
+                "direction": {
+                    type: "string",
+                    minLength: 1,
+                }
+            }
+        }
+    };
+    {% endverbatim %}
+
+    // Initialize the editor
+    var $editor = document.getElementById('editor_holder');
+
+    var jsoneditor;
+    jsoneditor = new JSONEditor($editor,{
+        schema: radarschema
+    });
+
+
+    // Set the value
+        jsoneditor.setValue(
+        {{ radarsettings|raw }}
+    );
+
+    // // Get the value
+    // var data = jsoneditor.getValue();
+    //
+    // // Validate
+    // var errors = jsoneditor.validate();
+    // if(errors.length) {
+    //     // Not valid
+    // }
+    //
+    // // Listen for changes
+    // jsoneditor.on("change",  function() {
+    //     // Do something...
+    // });
+
+
+    // Hook up the submit button to log to the console
+    document.getElementById('submit').addEventListener('click',function() {
+        var errors = jsoneditor.validate();
+        if(errors.length) {
+            // Not valid
+            document.getElementById("errormessage").innerText = "Please check all fields and try again";
+            jsoneditor.on('change',function() {
+                document.getElementById("errormessage").innerText = "";
+            });
+        } else {
+          // Get the value from the editor
+          document.getElementById("settings").value = JSON.stringify(jsoneditor.getValue());
+          document.forms["settingsform"].submit();
+        }
+    });
+    })();
+</script>
+</body>
+</html>

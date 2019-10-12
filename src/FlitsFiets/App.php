@@ -14,6 +14,7 @@ class App {
   public $html = "";
 
   public function __construct() {
+    session_start();
 
     $this->APPDIR = realpath(pathinfo($_SERVER["SCRIPT_FILENAME"], PATHINFO_DIRNAME)."/../");
     define( "APP_ROOT", $this->APPDIR);
@@ -128,7 +129,9 @@ class App {
 //        krumo($this->getResponse());
         break;
     }
+      $this->cleanFlash();
   }
+
   public function quitWithMessage($message) {
     ob_end_clean();
     print $message;
@@ -142,5 +145,25 @@ class App {
 
   public function debug($object) {
     $this->r['debug'][] = $object;
+  }
+
+  public function handleRedirect() {
+      if (isset($_POST['referrer'])) {
+          header("Location:".$_POST['referrer']);
+      }
+      die();
+  }
+
+  public function flash($message) {
+      if (!isset($_SESSION['messages'])) $_SESSION['messages'] = [];
+      $_SESSION['messages'][] = $message;
+  }
+
+  /**
+   * Clean up all non-persistent messages
+   * We can do this since this happens after displaying them in the view
+   */
+  public function cleanFlash() {
+      unset($_SESSION['messages']);
   }
 }

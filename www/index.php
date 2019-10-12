@@ -7,6 +7,7 @@ use FlitsFiets\App;
 use FlitsFiets\RegexRouter;
 use FlitsFiets\Controllers\ReportController;
 use FlitsFiets\Controllers\ApiController;
+use FlitsFiets\Controllers\SettingsController;
 
 try {
   $app = new App();
@@ -21,7 +22,7 @@ try {
     $app->view($c->render());
   });
 
-  $router->route("/\\".$_ENV['DASHBOARD_URL'].'\//', function() use ($app){
+  $router->route("/\\".$_ENV['DASHBOARD_URL'].'/', function() use ($app){
     $app->auth();
     // day in $_GET
     $c = new ReportController();
@@ -33,12 +34,37 @@ try {
     $c->addSubmission();
   });
 
+  $router->route('/edit/', function() use ($app){
+
+    $c = new SettingsController();
+    $app->view($c->render());
+  });
+
   $router->route('/terms/', function() use ($app){
     $app->view("<h1>TODO</h1>");
   });
 
   $router->route('/privacy/', function() use ($app){
     $app->view("<h1>TODO</h1>");
+  });
+
+  $router->route('//', function() use ($app){
+      switch($_SERVER['REQUEST_METHOD']) {
+          case "GET":
+              // todo: implement homepage
+              break;
+          case "POST":
+              // handle form submits
+              switch($_POST['op']) {
+                  case "savesettings":
+                      $c = new SettingsController();
+                      $c->save($_POST['settings']);
+                      $app->flash("Settings updated");
+                      $app->handleRedirect();
+                      break;
+              }
+              break;
+      }
   });
 
   $router->execute($_SERVER['REQUEST_URI']);

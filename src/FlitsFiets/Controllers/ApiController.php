@@ -2,13 +2,18 @@
 namespace FlitsFiets\Controllers;
 
 use FlitsFiets\Models\ApiSubmission;
+use FlitsFiets\Models\RadarSettings;
+use FlitsFiets\Views\View;
 
-class ApiController {
+class ApiController extends Controller {
 
-  private $m; // model
+  protected $m; // model
+  private $settings; // model
 
   public function __construct() {
-    $this->m = new ApiSubmission();
+      $this->v = new View();
+      $this->settings = new RadarSettings();
+      $this->m = new ApiSubmission($this->settings->loadRadarSettings());
   }
 
   public function addSubmission(){
@@ -16,7 +21,7 @@ class ApiController {
     $speed = floatval($_REQUEST['data']);
 
     $this->m->speed = $speed;
-    $this->m->radar = $_REQUEST['coreid'];
+    $this->m->deviceid = $_REQUEST['coreid'];
 
     $this->m->save();
   }

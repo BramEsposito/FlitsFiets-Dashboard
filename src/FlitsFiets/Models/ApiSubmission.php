@@ -13,22 +13,22 @@ class ApiSubmission extends Model {
   private $direction;
 
   private $speed;
-  public $radar;
+  private $radars;
+  private $deviceid;
 
-  public function __construct() {
+  public function __construct($settings) {
     parent::__construct();
+
+    foreach ($settings as $radar) {
+        $this->radars[$radar['deviceid']] = $radar;
+    }
+
+
     $this->modus = "mps";
     $this->street = "Anselmostraat";
     $this->lat = "51.2061932";
     $this->lon = "4.4042355";
     $this->direction = 350;
-  }
-
-  /**
-   * @param mixed $speed
-   */
-  public function setSpeed($speed) {
-    $this->speed = $speed;
   }
 
   public function __set($property, $value) {
@@ -42,20 +42,33 @@ class ApiSubmission extends Model {
     return $this;
   }
 
-
   public function save() {
     if ($this->speed < 15) return("low speed");
 
-    $data = array(
-      "SPEED"     => $this->speed,
-      "STREET"    => $this->street,
-      "DIRECTION" => $this->direction,
-      "LON"       => $this->lon,
-      "LAT"       => $this->lat,
-      "RADAR"     => $this->radar
-    );
+    if(array_key_exists($this->deviceid, $this->radars)) {
+        $radar = $this->radars[$this->deviceid];
+        $radar['speed'] = $this->speed;
+        $this->startSave($radar);
+    } else {
+        print_r($this->radars);
+    }
 
-    $this->db->insert("speed",$data);
+
+  }
+
+  private function startSave($radar) {
+      // TODO: add name of radar to db
+      // TODO: reference a location?
+      $data = array(
+          "SPEED"     => $radar['speed'],
+          "STREET"    => $radar['street'],
+          "DIRECTION" => $radar['direction'],
+          "LON"       => $radar['lon'],
+          "LAT"       => $radar['lat'],
+          "RADAR"     => $radar['deviceid']
+      );
+
+      $this->db->insert("speed",$data);
   }
 
 

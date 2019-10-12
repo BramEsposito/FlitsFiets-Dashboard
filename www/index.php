@@ -20,6 +20,7 @@ try {
     // date in request url
     $c = new ReportController($date);
     $app->view($c->render());
+    $app->sendResponse("html");
   });
 
   $router->route("/\\".$_ENV['DASHBOARD_URL'].'/', function() use ($app){
@@ -27,17 +28,20 @@ try {
     // day in $_GET
     $c = new ReportController();
     $app->view($c->render());
+    $app->sendResponse("html");
   });
 
   $router->route($_ENV['API_URL'].'/', function() use ($app){
     $c = new ApiController();
     $c->addSubmission();
+    $app->sendResponse("json");
   });
 
   $router->route('/edit/', function() use ($app){
 
     $c = new SettingsController();
     $app->view($c->render());
+      $app->sendResponse("html");
   });
 
   $router->route('/terms/', function() use ($app){
@@ -69,8 +73,6 @@ try {
 
   $router->execute($_SERVER['REQUEST_URI']);
 
-  $app->sendResponse("html");
-
 } catch (Throwable $e) {
     ob_end_clean();
 
@@ -78,6 +80,7 @@ try {
       'error' => array(
         'msg' => $e->getMessage(),
         'code' => $e->getCode(),
+        'trace' => $e->getTrace()
       )
     );
 

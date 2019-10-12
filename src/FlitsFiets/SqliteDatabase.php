@@ -52,7 +52,6 @@ class SqliteDatabase {
   }
 
   public function query( $query ) {
-    print($query."\n");
     $res = $this->sqlite->query( $query );
     if ( !$res )
     {

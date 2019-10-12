@@ -60,7 +60,7 @@
                 "name",
                 "modus",
                 "deviceid",
-                "streetname",
+                "street",
                 "lat",
                 "lon",
                 "direction"
@@ -72,14 +72,14 @@
                 },
                 "modus": {
                     type: "string",
-                    enum: ["mph","kmph"],
+                    enum: ["mps","kmph"],
                     default: "mph"
                 },
                 "deviceid": {
                     type: "string",
                     minLength: 1,
                 },
-                "streetname": {
+                "street": {
                     title: "Straat",
                     type: "string",
                     minLength: 1,

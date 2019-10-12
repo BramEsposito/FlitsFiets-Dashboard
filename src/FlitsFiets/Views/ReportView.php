@@ -45,6 +45,7 @@ class ReportView {
 
       $item = [
         'SPEED' => $speed,
+        'RADARNAME' => $item['RADARNAME'],
         'TIME' => $time,
         'FORMATTEDTIME' => date("H:i:s", $time),
         'DATE' => date("d/m/Y", $time),

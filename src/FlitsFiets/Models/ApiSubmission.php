@@ -23,7 +23,6 @@ class ApiSubmission extends Model {
         $this->radars[$radar['deviceid']] = $radar;
     }
 
-
     $this->modus = "mps";
     $this->street = "Anselmostraat";
     $this->lat = "51.2061932";
@@ -52,8 +51,6 @@ class ApiSubmission extends Model {
     } else {
         print_r($this->radars);
     }
-
-
   }
 
   private function startSave($radar) {
@@ -65,11 +62,10 @@ class ApiSubmission extends Model {
           "DIRECTION" => $radar['direction'],
           "LON"       => $radar['lon'],
           "LAT"       => $radar['lat'],
+          "RADARNAME" => $radar['name'],
           "RADAR"     => $radar['deviceid']
       );
 
       $this->db->insert("speed",$data);
   }
-
-
 }

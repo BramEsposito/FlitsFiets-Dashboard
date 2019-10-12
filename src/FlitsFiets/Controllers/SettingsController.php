@@ -13,7 +13,7 @@ class SettingsController extends Controller {
 
     $this->m = new RadarSettings();
     $this->v = new RadarSettingsEditor();
-    $this->v->addPageData($this->m->loadRadarSettings());
+    $this->v->addPageData(["radarsettings" => json_encode($this->m->loadRadarSettings())]);
   }
 
   public function save ($data) {

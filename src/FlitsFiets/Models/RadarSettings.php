@@ -10,7 +10,8 @@ class RadarSettings {
 
   public function __construct() {
     $this->settingsfile = APP_ROOT."/settings.json";
-    $this->data = ["radarsettings" => file_get_contents($this->settingsfile)];
+    $string = file_get_contents($this->settingsfile);
+    $this->data = json_decode($string, true);
   }
 
   public function loadRadarSettings() {

@@ -38,7 +38,7 @@ try {
   });
 
   $router->route('/edit/', function() use ($app){
-
+    $app->auth();
     $c = new SettingsController();
     $app->view($c->render());
       $app->sendResponse("html");

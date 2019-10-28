@@ -22,12 +22,6 @@ class ApiSubmission extends Model {
     foreach ($settings as $radar) {
         $this->radars[$radar['deviceid']] = $radar;
     }
-
-    $this->modus = "mps";
-    $this->street = "Anselmostraat";
-    $this->lat = "51.2061932";
-    $this->lon = "4.4042355";
-    $this->direction = 350;
   }
 
   public function __set($property, $value) {

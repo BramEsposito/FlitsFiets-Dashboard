@@ -28,6 +28,10 @@ class ApiSubmission extends Model {
 
     if ($property == "speed" && $this->modus == "mps") {
       $this->speed = floatval($value)*3.6;
+    } else if ($property == "deviceid") {
+      $this->deviceid = $value;
+      $radar = $this->radars[$this->deviceid];
+      $this->modus = $radar['modus'];
     } else if (property_exists($this, $property)) {
       $this->$property = $value;
     }

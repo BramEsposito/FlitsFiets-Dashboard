@@ -33,7 +33,6 @@ class ReportView {
       $datetime = new \DateTime();
       $datetime->setTimestamp($time);
       $datetime->setTimezone(new \DateTimeZone("Europe/Brussels"));
-      $time = $datetime->format("U");
 
       switch (true) {
         case $speed > 30:
@@ -50,7 +49,7 @@ class ReportView {
       $item = [
         'SPEED' => $speed,
         'RADARNAME' => $item['RADARNAME'],
-        'TIME' => $datetime->format("U"),
+        'TIME' => $time,
         'FORMATTEDTIME' => $datetime->format("H:i:s"),
         'DATE' => $datetime->format("d/m/Y"),
         'COLOR' => $color,

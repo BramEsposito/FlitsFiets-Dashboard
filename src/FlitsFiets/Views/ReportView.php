@@ -29,7 +29,11 @@ class ReportView {
 
     array_walk($r, function(&$item, $key) {
       $speed = round(floatval($item['SPEED']), 2);
-      $time = strtotime($item['TIME'] . " + 2hours");
+      $time = strtotime($item['TIME']);
+      $datetime = new \DateTime();
+      $datetime->setTimestamp($time);
+      $datetime->setTimezone(new \DateTimeZone("Europe/Brussels"));
+      $time = $datetime->format("U");
 
       switch (true) {
         case $speed > 30:
@@ -46,9 +50,9 @@ class ReportView {
       $item = [
         'SPEED' => $speed,
         'RADARNAME' => $item['RADARNAME'],
-        'TIME' => $time,
-        'FORMATTEDTIME' => date("H:i:s", $time),
-        'DATE' => date("d/m/Y", $time),
+        'TIME' => $datetime->format("U"),
+        'FORMATTEDTIME' => $datetime->format("H:i:s"),
+        'DATE' => $datetime->format("d/m/Y"),
         'COLOR' => $color,
         'STREET' => $item['STREET'],
         'DIRECTION' => $item['DIRECTION'],

@@ -24,14 +24,25 @@ class ApiSubmission extends Model {
     }
   }
 
+  public function loadRadarByDeviceId($deviceid) {
+    if (!array_key_exists($deviceid,$this->radars)) {
+       throw new Exception("Unknown radar deviceid ".$deviceid.". Please update your configuration."); 
+    }
+    $this->deviceid = $deviceid;
+    $radar = $this->radars[$this->deviceid];
+    $this->modus = $radar['modus'];
+    $this->street = $radar['street'];
+    $this->lat = $radar['lat'];
+    $this->lon = $radar['lon'];
+    $this->direction = $radar['direction'];
+  }
+
   public function __set($property, $value) {
 
     if ($property == "speed" && $this->modus == "mps") {
       $this->speed = floatval($value)*3.6;
     } else if ($property == "deviceid") {
-      $this->deviceid = $value;
-      $radar = $this->radars[$this->deviceid];
-      $this->modus = $radar['modus'];
+      throw new Exception("Set the device Id with loadRadarByDeviceId."); 
     } else if (property_exists($this, $property)) {
       $this->$property = $value;
     }

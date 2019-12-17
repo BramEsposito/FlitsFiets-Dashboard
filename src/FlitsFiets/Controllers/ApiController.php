@@ -20,7 +20,7 @@ class ApiController extends Controller {
 
     $speed = floatval($_REQUEST['data']);
 
-    $this->m->deviceid = $_REQUEST['coreid'];
+    $this->m->loadRadarByDeviceId($_REQUEST['coreid']);
     $this->m->speed = $speed;
 
     $this->m->save();

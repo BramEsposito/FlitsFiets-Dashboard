@@ -57,8 +57,10 @@ class ApiSubmission extends Model {
         $radar = $this->radars[$this->deviceid];
         $radar['speed'] = $this->speed;
         $this->startSave($radar);
+        return ("Saved entry to database");
     } else {
         print_r($this->radars);
+        return ("DeviceId not found in radar config.");
     }
   }
 

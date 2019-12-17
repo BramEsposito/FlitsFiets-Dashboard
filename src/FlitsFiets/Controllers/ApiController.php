@@ -23,6 +23,6 @@ class ApiController extends Controller {
     $this->m->loadRadarByDeviceId($_REQUEST['coreid']);
     $this->m->speed = $speed;
 
-    $this->m->save();
+    return $this->m->save();
   }
 }

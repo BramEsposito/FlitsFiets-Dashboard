@@ -34,7 +34,7 @@ try {
   $router->route($_ENV['API_URL'].'/', function() use ($app){
     $c = new ApiController();
     $c->addSubmission();
-    $app->sendResponse("json");
+    $app->debug($app->sendResponse("json"));
   });
 
   $router->route('/edit/', function() use ($app){
